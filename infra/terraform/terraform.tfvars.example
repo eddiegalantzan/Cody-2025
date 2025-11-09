@@ -1,0 +1,45 @@
+# Copy this file to terraform.tfvars and fill in your values
+# terraform.tfvars is in .gitignore and should never be committed
+
+# DigitalOcean API Token
+# Get from: https://cloud.digitalocean.com/account/api/tokens
+do_token = "dop_v1_your_token_here"
+
+# Environment: "local" or "cody2025staging"
+environment = "cody2025staging"
+
+# Region: fra1 (Frankfurt), ams3 (Amsterdam), lon1 (London), nyc3 (New York), etc.
+region = "fra1"
+
+# Droplet size: Start with s-1vcpu-1gb ($6/month), upgrade to s-1vcpu-2gb ($12/month) if needed
+# Start small and upgrade if you experience performance issues or out-of-memory errors
+droplet_size = "s-1vcpu-1gb"
+
+# PostgreSQL version
+postgres_version = "16"
+
+# Database configuration
+database_name = "cody2025"
+database_user = "app_user"
+
+# Allowed IPs for database access (CIDR notation)
+# Leave empty to allow from anywhere (not recommended for production)
+# Example: ["1.2.3.4/32", "5.6.7.0/24"]
+allowed_ips = []
+
+# Enable automated backups
+backup_enabled = true
+
+# Storage size in GB
+storage_size_gb = 25
+
+# Node.js version
+node_version = "22"
+
+# Application server port
+app_port = 3000
+
+# DigitalOcean project name (for organizing resources in dashboard)
+# This project is for staging environment only
+project_name = "Cody-2025-Staging"
+

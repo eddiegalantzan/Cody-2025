@@ -47,9 +47,10 @@ All methods follow the same pattern:
 4. [4.0_WRAPPERS_GUIDE.md](./documents/4.0_WRAPPERS_GUIDE.md) - Wrapper implementation
 5. [5.0_PLAN.md](./documents/5.0_PLAN.md) - Overall project plan
 6. [6.0_STEP_1_TERRAFORM_POSTGRES.md](./documents/6.0_STEP_1_TERRAFORM_POSTGRES.md) - Terraform setup
-7. [7.0_SECRETS_MANAGEMENT.md](./documents/7.0_SECRETS_MANAGEMENT.md) - Secrets configuration
-8. [8.0_SECURITY.md](./documents/8.0_SECURITY.md) - Security practices
-9. [9.0_INTEGRATIONS.md](./documents/9.0_INTEGRATIONS.md) - Third-party integrations (Clerk, Payoneer, Mailgun, WhatsApp)
+7. [6.1_DIGITALOCEAN_SETUP.md](./documents/6.1_DIGITALOCEAN_SETUP.md) - DigitalOcean account setup
+8. [7.0_SECRETS_MANAGEMENT.md](./documents/7.0_SECRETS_MANAGEMENT.md) - Secrets configuration
+9. [8.0_SECURITY.md](./documents/8.0_SECURITY.md) - Security practices
+10. [9.0_INTEGRATIONS.md](./documents/9.0_INTEGRATIONS.md) - Third-party integrations (Clerk, Payoneer, Mailgun, WhatsApp)
 
 ## Resources
 
