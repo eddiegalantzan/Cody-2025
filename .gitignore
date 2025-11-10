@@ -42,6 +42,8 @@ data/
 *.tfstate.*
 .terraform.lock.hcl
 tfplan
+terraform.tfvars
+*.tfvars
 
 # Temporary files
 tmp/
