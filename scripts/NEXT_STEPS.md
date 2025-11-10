@@ -26,7 +26,7 @@
 
 3. **Verify:**
    ```bash
-   ls -1 data/wco-pdfs/2022/markdown/*.md | wc -l
+   ls -1 data/wco/2022/md/*.md | wc -l
    ```
 
 ## Next: LLM-Based Data Extraction

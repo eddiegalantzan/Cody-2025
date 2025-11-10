@@ -16,7 +16,7 @@ PDF Download → Markdown Conversion → LLM Extraction → Database Import
 - Browser-based (recommended): `yarn download-wco-pdfs:browser --headless`
 - HTTP-based: `yarn download-wco-pdfs`
 
-**Output:** `./data/wco-pdfs/2022/*.pdf`
+**Output:** `./data/wco/2022/pdfs/*.pdf`
 
 **Documentation:**
 - `scripts/README.md` - Full script documentation
@@ -40,7 +40,7 @@ pip install marker-pdf  # Recommended for best quality
 yarn pdf-to-markdown --tool marker
 ```
 
-**Output:** `./data/wco-pdfs/2022/markdown/*.md` (111 files)
+**Output:** `./data/wco/2022/md/*.md` (111 files)
 
 **Documentation:**
 - `scripts/README.md` - Complete documentation with tool comparison
@@ -54,7 +54,7 @@ yarn pdf-to-markdown --tool marker
 **Goal:** Extract structured data from Markdown files using LLM
 
 **Process:**
-1. Read Markdown files from `./data/wco-pdfs/2022/markdown/`
+1. Read Markdown files from `./data/wco/2022/md/`
 2. Use LLM to extract:
    - **HS Codes:**
      - 4-digit headings (e.g., 0101, 0102)
@@ -156,8 +156,8 @@ yarn pdf-to-markdown --tool marker
 
 | Step | Status | Script/Tool | Output Location |
 |------|--------|-------------|-----------------|
-| 1. PDF Download | ✅ Complete | `download-wco-pdfs-browser.ts` | `./data/wco-pdfs/2022/*.pdf` (111 files) |
-| 2. Markdown Conversion | ✅ Complete | `pdf-to-markdown.ts` | `./data/wco-pdfs/2022/markdown/*.md` (111 files) |
+| 1. PDF Download | ✅ Complete | `download-wco-pdfs-browser.ts` | `./data/wco/2022/pdfs/*.pdf` (111 files) |
+| 2. Markdown Conversion | ✅ Complete | `pdf-to-markdown.ts` | `./data/wco/2022/md/*.md` (111 files) |
 | 3. LLM Extraction | ⏳ TODO | TBD | Structured JSON/Data |
 | 4. Database Import | ⏳ TODO | TBD | PostgreSQL database |
 

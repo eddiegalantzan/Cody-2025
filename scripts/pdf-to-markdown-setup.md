@@ -21,7 +21,7 @@
    yarn pdf-to-markdown --tool marker
    ```
 
-3. **Output:** Markdown files saved to `./data/wco-pdfs/{edition}/markdown/`
+3. **Output:** Markdown files saved to `./data/wco/{edition}/md/`
 
 ## Tool Comparison
 
@@ -49,7 +49,7 @@ python3 --version  # Check if installed
 ### Conversion Errors
 1. Check error message in script output
 2. Try a different tool (e.g., pdfplumber instead of marker)
-3. Verify PDF files: `file data/wco-pdfs/2022/*.pdf | head -5`
+3. Verify PDF files: `file data/wco/2022/pdfs/*.pdf | head -5`
 
 ## Full Documentation
 

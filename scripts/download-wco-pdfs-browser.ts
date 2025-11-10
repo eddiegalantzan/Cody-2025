@@ -16,7 +16,7 @@
  * 
  * Options:
  *   --edition <year>    WCO edition year (default: 2022)
- *   --output <dir>      Output directory (default: ./data/wco-pdfs/{edition})
+ *   --output <dir>      Output directory (default: ./data/wco/{edition}/pdfs)
  *   --chapters <range>  Chapter range, e.g., "1-97" or "1,2,3" (default: 1-97)
  *   --delay <ms>        Delay between downloads in milliseconds (default: 2000)
  *   --headless          Run browser in headless mode (default: false, shows browser)
@@ -30,7 +30,7 @@ import { existsSync } from 'fs';
 
 // Configuration
 const DEFAULT_EDITION = '2022';
-const DEFAULT_OUTPUT_DIR = './data/wco-pdfs';
+const DEFAULT_OUTPUT_DIR = './data/wco';
 const DEFAULT_DELAY_MS = 2000;
 
 // WCO website URLs
@@ -103,7 +103,7 @@ Features:
 
   // Set default output directory if not provided
   if (!config.outputDir) {
-    config.outputDir = path.join(DEFAULT_OUTPUT_DIR, config.edition);
+    config.outputDir = path.join(DEFAULT_OUTPUT_DIR, config.edition, 'pdfs');
   }
 
   return config;

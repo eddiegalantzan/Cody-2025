@@ -8,7 +8,7 @@
  * This is a skeleton/template for the actual implementation.
  * 
  * TODO: Implement this script to:
- * 1. Read Markdown files from ./data/wco-pdfs/{edition}/markdown/
+ * 1. Read Markdown files from ./data/wco/{edition}/md/
  * 2. Use LLM to extract structured data:
  *    - HS codes (4-digit headings, 6-digit subheadings)
  *    - Descriptions
@@ -24,8 +24,8 @@
  * 
  * Options:
  *   --edition <year>        WCO edition year (default: 2022)
- *   --input <dir>           Input directory with Markdown files (default: ./data/wco-pdfs/{edition}/markdown)
- *   --output <file|dir>     Output file (JSON) or directory (default: ./data/wco-pdfs/{edition}/extracted)
+ *   --input <dir>           Input directory with Markdown files (default: ./data/wco/{edition}/md)
+ *   --output <file|dir>     Output file (JSON) or directory (default: ./data/wco/{edition}/extracted)
  *   --provider <provider>  LLM provider: openai, anthropic, google, xai (default: openai)
  *   --model <model>        LLM model name (default: provider-specific)
  *   --batch-size <n>        Number of files to process per batch (default: 10)
@@ -42,8 +42,8 @@
 
 // TODO: Configuration
 // const DEFAULT_EDITION = '2022';
-// const DEFAULT_INPUT_DIR = './data/wco-pdfs';
-// const DEFAULT_OUTPUT_DIR = './data/wco-pdfs';
+// const DEFAULT_INPUT_DIR = './data/wco';
+// const DEFAULT_OUTPUT_DIR = './data/wco';
 // const DEFAULT_PROVIDER = 'openai';
 // const DEFAULT_BATCH_SIZE = 10;
 

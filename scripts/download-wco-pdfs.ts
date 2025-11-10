@@ -39,7 +39,7 @@ const getScriptDir = (): string => {
  * 
  * Options:
  *   --edition <year>    WCO edition year (default: 2022)
- *   --output <dir>      Output directory (default: ./data/wco-pdfs/{edition})
+ *   --output <dir>      Output directory (default: ./data/wco/{edition}/pdfs)
  *   --chapters <range>  Chapter range, e.g., "1-97" or "1,2,3" (default: 1-97)
  *   --delay <ms>        Base delay between downloads in milliseconds (default: ${DEFAULT_DELAY_MS})
  *   --delay-variation <ms>  Random variation added to delay (default: ${DEFAULT_DELAY_VARIATION_MS})
@@ -70,7 +70,7 @@ import { URL as NodeURL } from 'url';
 
 // Configuration
 const DEFAULT_EDITION = '2022';
-const DEFAULT_OUTPUT_DIR = './data/wco-pdfs';
+const DEFAULT_OUTPUT_DIR = './data/wco';
 const DEFAULT_DELAY_MS = 5000; // Base delay between downloads (will be randomized)
 const DEFAULT_DELAY_VARIATION_MS = 5000; // Random variation added to base delay
 const DEFAULT_RETRIES = 3;
@@ -421,7 +421,7 @@ Usage: tsx scripts/download-wco-pdfs.ts [options]
 
 Options:
   --edition <year>    WCO edition year (default: 2022)
-  --output <dir>      Output directory (default: ./data/wco-pdfs/{edition})
+  --output <dir>      Output directory (default: ./data/wco/{edition}/pdfs)
   --chapters <range>  Chapter range, e.g., "1-97" or "1,2,3" (default: 1-97)
   --delay <ms>        Base delay between downloads in milliseconds (default: ${DEFAULT_DELAY_MS})
   --delay-variation <ms>  Random variation added to delay (default: ${DEFAULT_DELAY_VARIATION_MS})
@@ -449,7 +449,7 @@ Examples:
 
   // Set default output directory if not specified
   if (!config.outputDir) {
-    config.outputDir = path.join(DEFAULT_OUTPUT_DIR, config.edition);
+    config.outputDir = path.join(DEFAULT_OUTPUT_DIR, config.edition, 'pdfs');
   }
 
   return config;

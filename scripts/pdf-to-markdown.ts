@@ -12,8 +12,8 @@
  * 
  * Options:
  *   --edition <year>    WCO edition year (default: 2022)
- *   --input <dir>       Input directory with PDFs (default: ./data/wco-pdfs/{edition})
- *   --output <dir>      Output directory for Markdown files (default: ./data/wco-pdfs/{edition}/markdown)
+ *   --input <dir>       Input directory with PDFs (default: ./data/wco/{edition}/pdfs)
+ *   --output <dir>      Output directory for Markdown files (default: ./data/wco/{edition}/md)
  *   --tool <tool>       Conversion tool: marker, pdfplumber, or pdfjs (default: marker)
  *   --skip-existing     Skip files that already exist
  *   --help, -h          Show help message
@@ -29,8 +29,8 @@ const execAsync = promisify(exec);
 
 // Configuration
 const DEFAULT_EDITION = '2022';
-const DEFAULT_INPUT_DIR = './data/wco-pdfs';
-const DEFAULT_OUTPUT_DIR = './data/wco-pdfs';
+const DEFAULT_INPUT_DIR = './data/wco';
+const DEFAULT_OUTPUT_DIR = './data/wco';
 const DEFAULT_TOOL = 'marker';
 
 interface Config {
@@ -86,8 +86,8 @@ Usage:
 
 Options:
   --edition <year>      WCO edition year (default: ${DEFAULT_EDITION})
-  --input <dir>         Input directory with PDFs (default: ${DEFAULT_INPUT_DIR}/{edition})
-  --output <dir>        Output directory for Markdown files (default: ${DEFAULT_OUTPUT_DIR}/{edition}/markdown)
+  --input <dir>         Input directory with PDFs (default: ${DEFAULT_INPUT_DIR}/{edition}/pdfs)
+  --output <dir>        Output directory for Markdown files (default: ${DEFAULT_OUTPUT_DIR}/{edition}/md)
   --tool <tool>         Conversion tool: marker, pdfplumber, or pdfjs (default: ${DEFAULT_TOOL})
   --skip-existing        Skip files that already exist
   --help, -h            Show this help message
@@ -313,8 +313,8 @@ async function convertWithPdfjs(pdfPath: string, outputPath: string): Promise<bo
 async function main(): Promise<void> {
   const config = parseArgs();
   
-  const inputDir = path.join(config.inputDir, config.edition);
-  const outputDir = path.join(config.outputDir, config.edition, 'markdown');
+  const inputDir = path.join(config.inputDir, config.edition, 'pdfs');
+  const outputDir = path.join(config.outputDir, config.edition, 'md');
   
   console.log('PDF to Markdown Conversion Script');
   console.log('==================================');

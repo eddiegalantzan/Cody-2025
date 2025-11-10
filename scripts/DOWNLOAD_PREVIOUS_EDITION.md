@@ -46,28 +46,31 @@ yarn pdf-to-markdown --edition 2012 --tool marker
 
 ```bash
 # Check downloaded PDFs
-ls -la data/wco-pdfs/2017/*.pdf | wc -l
+ls -la data/wco/2017/pdfs/*.pdf | wc -l
 
 # Check converted Markdown files
-ls -la data/wco-pdfs/2017/markdown/*.md | wc -l
+ls -la data/wco/2017/md/*.md | wc -l
 ```
 
 ## Output Structure
 
 Files will be organized by edition:
 ```
-data/wco-pdfs/
+data/wco/
 ├── 2022/          (already downloaded)
-│   ├── *.pdf
-│   └── markdown/
+│   ├── pdfs/
+│   │   └── *.pdf
+│   └── md/
 │       └── *.md
 ├── 2017/          (previous edition)
-│   ├── *.pdf
-│   └── markdown/
+│   ├── pdfs/
+│   │   └── *.pdf
+│   └── md/
 │       └── *.md
 └── 2012/          (older edition)
-    ├── *.pdf
-    └── markdown/
+    ├── pdfs/
+    │   └── *.pdf
+    └── md/
         └── *.md
 ```
 

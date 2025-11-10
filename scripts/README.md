@@ -128,7 +128,7 @@ tsx scripts/download-wco-pdfs.ts [options]
 
 **Browser-based Script (`download-wco-pdfs-browser.ts`):**
 - `--edition <year>` - WCO edition year (default: 2022)
-- `--output <dir>` - Output directory (default: `./data/wco-pdfs/{edition}`)
+- `--output <dir>` - Output directory (default: `./data/wco/{edition}/pdfs`)
 - `--chapters <range>` - Chapter range, e.g., "1-97" or "1,2,3" (default: 1-97)
 - `--delay <ms>` - Delay between downloads in milliseconds (default: 2000)
 - `--headless` - Run browser in headless mode (default: false, shows browser)
@@ -136,7 +136,7 @@ tsx scripts/download-wco-pdfs.ts [options]
 
 **HTTP-based Script (`download-wco-pdfs.ts`):**
 - `--edition <year>` - WCO edition year (default: 2022)
-- `--output <dir>` - Output directory (default: `./data/wco-pdfs/{edition}`)
+- `--output <dir>` - Output directory (default: `./data/wco/{edition}/pdfs`)
 - `--chapters <range>` - Chapter range, e.g., "1-97" or "1,2,3" (default: 1-97)
 - `--delay <ms>` - Base delay between downloads in milliseconds (default: 5000). Actual delay = base + random(0 to variation)
 - `--delay-variation <ms>` - Random variation added to delay (default: 5000). Helps avoid being blocked by appearing more human-like
@@ -151,7 +151,7 @@ tsx scripts/download-wco-pdfs.ts [options]
 
 ### Output
 
-PDFs are saved to `./data/wco-pdfs/{edition}/` with filenames like:
+PDFs are saved to `./data/wco/{edition}/pdfs/` with filenames like:
 
 **Additional PDFs (downloaded first - critical for LLM classification):**
 - `introduction_2022e.pdf` - Introduction to HS Nomenclature
@@ -300,8 +300,8 @@ yarn pdf-to-markdown:help
 ### Options
 
 - `--edition <year>` - WCO edition year (default: 2022)
-- `--input <dir>` - Input directory with PDFs (default: `./data/wco-pdfs/{edition}`)
-- `--output <dir>` - Output directory for Markdown files (default: `./data/wco-pdfs/{edition}/markdown`)
+- `--input <dir>` - Input directory with PDFs (default: `./data/wco/{edition}/pdfs`)
+- `--output <dir>` - Output directory for Markdown files (default: `./data/wco/{edition}/md`)
 - `--tool <tool>` - Conversion tool: `marker`, `pdfplumber`, or `pdfjs` (default: `marker`)
 - `--skip-existing` - Skip files that already exist
 - `--help, -h` - Show help message
@@ -316,7 +316,7 @@ yarn pdf-to-markdown:help
 
 ### Output
 
-Markdown files are saved to `./data/wco-pdfs/{edition}/markdown/` with filenames like:
+Markdown files are saved to `./data/wco/{edition}/md/` with filenames like:
 
 - `0101_2022e.md` (from `0101_2022e.pdf`)
 - `introduction_2022e.md` (from `introduction_2022e.pdf`)
@@ -337,8 +337,8 @@ Markdown files are saved to `./data/wco-pdfs/{edition}/markdown/` with filenames
 PDF to Markdown Conversion Script
 ==================================
 Edition: 2022
-Input: ./data/wco-pdfs/2022
-Output: ./data/wco-pdfs/2022/markdown
+Input: ./data/wco/2022/pdfs
+Output: ./data/wco/2022/md
 Tool: marker
 Skip Existing: false
 
@@ -358,6 +358,6 @@ Converted: 111
 Failed: 0
 Skipped: 0
 
-Markdown files saved to: ./data/wco-pdfs/2022/markdown
+Markdown files saved to: ./data/wco/2022/md
 ```
 
