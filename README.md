@@ -37,6 +37,52 @@ All methods follow the same pattern:
 - **API Webhook (Async):** POST request, receive job ID (or session ID if interactive), get result via webhook callback. Continue workflow with session ID + answers
 - **API Synchronous:** POST request, wait for immediate response with HS code(s) or questions. Continue workflow with session ID + answers
 
+## User Roles
+
+The application uses a B2B organization-based access model with role-based permissions. Users belong to organizations and have specific roles that determine their access level.
+
+### Organization Roles
+
+Roles are defined in the `organization_members` table with the following hierarchy (from highest to lowest privilege):
+
+1. **Owner** (`owner`)
+   - Full control over the organization
+   - Can manage all organization settings
+   - Can delete the organization
+   - Can manage all members (invite, remove, change roles)
+   - Can manage billing and payment accounts
+   - Can access all organization data and classifications
+   - Can manage API keys and webhooks
+
+2. **Admin** (`admin`)
+   - Can manage organization settings (except deletion)
+   - Can manage members (invite, remove, change roles except owner)
+   - Can access all organization data and classifications
+   - Can manage API keys and webhooks
+   - Cannot delete the organization or change owner role
+
+3. **Member** (`member`)
+   - Can create and view their own classifications
+   - Can view organization-level data (shared classifications, item code lists)
+   - Can upload and manage company item code lists
+   - Cannot manage organization settings or members
+   - Cannot access billing or payment information
+
+4. **Viewer** (`viewer`)
+   - Read-only access to organization data
+   - Can view classifications (own and shared)
+   - Can view organization-level data
+   - Cannot create classifications or modify any data
+   - Cannot access sensitive information (billing, API keys)
+
+### Role Permissions
+
+Each role can have additional fine-grained permissions stored in the `organization_member_permissions` JSONB field, allowing for custom permission sets beyond the base role capabilities.
+
+### Data Isolation
+
+All data (classifications, item code lists, transactions, etc.) is isolated at the organization level. Users can only access data belonging to their organization, and role permissions determine what actions they can perform on that data.
+
 ## Quick Start
 
 ### Prerequisites

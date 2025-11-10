@@ -26,7 +26,10 @@ This directory contains the database schema definition for Cody-2025.
 
 ### B2B/Organization Management
 - `organizations` - Organizations linked to Clerk organization IDs
-- `organization_members` - Users in organizations with roles
+- `organization_members` - Users in organizations with roles (owner, admin, member, viewer)
+  - Role hierarchy: `owner` > `admin` > `member` > `viewer`
+  - Custom permissions stored in `organization_member_permissions` JSONB field
+  - See [README.md](../README.md#user-roles) for detailed role permissions
 - `organization_groups` - Groups/teams within organizations
 - `organization_group_members` - Group membership
 
@@ -35,7 +38,7 @@ This directory contains the database schema definition for Cody-2025.
 - `wco_editions` - WCO HS Nomenclature editions (2022, 2017, etc.)
 - `wco_sections` - WCO Sections (I-XXI)
 - `wco_chapters` - WCO Chapters (1-97)
-- `wco_headings` - WCO Headings (4-digit codes, e.g., 01.01, 01.02)
+- `wco_headings` - WCO Headings (4-digit codes without dots, e.g., 0101, 0102)
 - `wco_hs_codes` - WCO 6-digit HS codes (international standard)
 - `customs_books` - Country-specific customs books (Israel: 3 books) with sync tracking fields
 - `customs_book_hs_codes` - HS codes in customs books (extends WCO codes to 8-10 digits) with classification rules JSONB field
@@ -147,6 +150,12 @@ After applying the schema:
 
 ## Related Documentation
 
+**Schema Documentation:**
+- [SCHEMA_VERIFICATION.md](./SCHEMA_VERIFICATION.md) - Quick verification checklist
+- [SCHEMA_DATA_ANALYSIS.md](./SCHEMA_DATA_ANALYSIS.md) - Comprehensive schema vs. data analysis
+- [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md) - Schema migration procedures
+
+**Project Documentation:**
 - [5.0_PLAN.md](../documents/5.0_PLAN.md) - Phase 2: Database Schema
 - [7.0_SECRETS_MANAGEMENT.md](../documents/7.0_SECRETS_MANAGEMENT.md) - Database connection secrets
 - [6.0_STEP_1_TERRAFORM_POSTGRES.md](../documents/6.0_STEP_1_TERRAFORM_POSTGRES.md) - Infrastructure setup

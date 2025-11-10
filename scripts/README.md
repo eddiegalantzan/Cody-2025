@@ -22,6 +22,11 @@ Two scripts are available for downloading WCO HS Nomenclature PDF files from the
    - Faster but requires correct URL patterns
    - May encounter 404s if URL patterns change
 
+**Shared Utilities** (`shared-utils.ts`):
+- Common helper functions used by both download scripts
+- Includes: `sleep`, `processUrl`, `toAbsoluteUrl`, `getBrowserHeaders`, `getRandomDelay`
+- Follows DRY (Don't Repeat Yourself) principle to avoid code duplication
+
 ### Prerequisites
 
 - Node.js 20+

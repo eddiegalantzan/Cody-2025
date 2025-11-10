@@ -66,12 +66,13 @@ CREATE TABLE wco_chapters (
 CREATE INDEX idx_wco_chapter_section_fk ON wco_chapters(wco_chapter_wco_section_fk);
 CREATE INDEX idx_wco_chapter_number ON wco_chapters(wco_chapter_wco_section_fk, wco_chapter_number);
 
--- WCO Headings (4-digit codes, e.g., 01.01, 01.02, 01.03)
+-- WCO Headings (4-digit codes, e.g., 0101, 0102, 0103)
 -- Reference: https://www.wcoomd.org/-/media/wco/public/global/pdf/topics/nomenclature/instruments-and-tools/hs-nomenclature-2022/2022/0101_2022e.pdf?la=en
+-- Note: Heading codes are stored without dots (e.g., "0101" instead of "01.01")
 CREATE TABLE wco_headings (
     wco_heading_id SERIAL PRIMARY KEY,
     wco_heading_wco_chapter_fk INTEGER NOT NULL REFERENCES wco_chapters(wco_chapter_id) ON DELETE RESTRICT,
-    wco_heading_code VARCHAR(5) NOT NULL, -- 4-digit heading code (e.g., "01.01", "01.02")
+    wco_heading_code VARCHAR(4) NOT NULL, -- 4-digit heading code without dot (e.g., "0101", "0102")
     wco_heading_title VARCHAR(500) NOT NULL, -- e.g., "Live horses, asses, mules and hinnies"
     wco_heading_notes TEXT, -- Heading notes
     wco_heading_created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

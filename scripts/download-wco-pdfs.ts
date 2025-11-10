@@ -65,8 +65,9 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as https from 'https';
 import * as http from 'http';
-import { createWriteStream, existsSync, readFileSync, statSync, unlinkSync } from 'fs';
+import { createWriteStream, existsSync, statSync, unlinkSync } from 'fs';
 import { URL as NodeURL } from 'url';
+import { sleep, getBrowserHeaders as getBrowserHeadersBase, getRandomDelay as getRandomDelayBase } from './shared-utils.js';
 
 // Configuration
 const DEFAULT_EDITION = '2022';
@@ -93,34 +94,15 @@ function getRandomUserAgent(): string {
 let cookieJar: string = '';
 
 // Get realistic browser headers (with cookies and referer if available)
-function getBrowserHeaders(referer?: string): Record<string, string> {
-  const headers: Record<string, string> = {
-    'User-Agent': getRandomUserAgent(),
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'DNT': '1',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': referer ? 'same-origin' : 'none',
-    'Sec-Fetch-User': '?1',
-    'Cache-Control': 'max-age=0',
-  };
-  
-  // Add referer if provided
-  if (referer) {
-    headers['Referer'] = referer;
-  }
-  
-  // Add cookies if we have them
-  if (cookieJar) {
-    headers['Cookie'] = cookieJar;
-  }
-  
+// Uses shared utility but adds cookie support and random user agent
+const getBrowserHeaders = (referer?: string): Record<string, string> => {
+  const headers = getBrowserHeadersBase(referer, cookieJar || undefined, getRandomUserAgent());
+  // Add additional headers specific to this script
+  headers['DNT'] = '1';
+  headers['Sec-Fetch-User'] = '?1';
+  headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7';
   return headers;
-}
+};
 
 // Extract cookies from Set-Cookie headers
 function extractCookies(response: http.IncomingMessage): void {
@@ -140,34 +122,7 @@ function extractCookies(response: http.IncomingMessage): void {
   }
 }
 
-// Load WCO credentials from .secrets file
-function loadWCOCredentials(): { username: string; password: string } | null {
-  try {
-    const secretsPath = path.join(process.cwd(), '.secrets');
-    const secretsContent = readFileSync(secretsPath, 'utf-8');
-    
-    let username: string | null = null;
-    let password: string | null = null;
-    
-    const lines = secretsContent.split('\n');
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (trimmed.startsWith('WCO_USERNAME=')) {
-        username = trimmed.substring('WCO_USERNAME='.length).trim();
-      } else if (trimmed.startsWith('WCO_PASSWORD=')) {
-        password = trimmed.substring('WCO_PASSWORD='.length).trim();
-      }
-    }
-    
-    if (username && password) {
-      return { username, password };
-    }
-  } catch (error) {
-    // .secrets file not found or error reading
-  }
-  
-  return null;
-}
+// Note: loadWCOCredentials removed - PDFs are publicly accessible, no login needed
 
 // Visit WCO main page to establish session (like a regular browser)
 async function establishSession(edition: string, verbose: boolean = false): Promise<string> {
@@ -228,11 +183,10 @@ async function establishSession(edition: string, verbose: boolean = false): Prom
   });
 }
 
-// Get random delay with variation
-function getRandomDelay(baseDelay: number, variation: number = DEFAULT_DELAY_VARIATION_MS): number {
-  const randomVariation = Math.floor(Math.random() * variation);
-  return baseDelay + randomVariation;
-}
+// Get random delay with variation (only positive variation for this script)
+const getRandomDelay = (baseDelay: number, variation: number = DEFAULT_DELAY_VARIATION_MS): number => {
+  return getRandomDelayBase(baseDelay, variation, false); // false = only add, don't subtract
+};
 // Base URL for chapter/heading PDFs
 const BASE_URL = 'https://www.wcoomd.org/-/media/wco/public/global/pdf/topics/nomenclature/instruments-and-tools/hs-nomenclature-{EDITION}/{EDITION}/{CHAPTER}{HEADING}_{EDITION}e.pdf';
 
@@ -691,9 +645,7 @@ function downloadFile(url: string, outputPath: string, refererUrl: string, retri
 }
 
 // Sleep/delay function
-function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// sleep is imported from shared-utils.ts
 
 // Check if file exists
 async function fileExists(filePath: string): Promise<boolean> {
@@ -893,15 +845,10 @@ async function main(): Promise<void> {
           totalDownloaded++;
           stats.downloaded.push({ chapter: 0, heading: 'additional', filename });
         } else if (result.status === 404) {
-          // 404 is a bug - file should exist, stop and fix
-          console.error(`\n❌ ERROR: File not found (404): ${filename}`);
-          console.error(`   URL: ${url}`);
-          console.error(`\nThis is a bug - the file should exist. Please check:`);
-          console.error(`   1. Is the filename correct?`);
-          console.error(`   2. Is the URL pattern correct?`);
-          console.error(`   3. Does the file exist on the WCO server?`);
-          console.error(`\nStopping download to fix the bug.\n`);
-          process.exit(1);
+          // 404 for additional PDFs - may not exist for older editions, skip and continue
+          console.log(`  ⊘ ${filename} - not found (404), skipping (may not exist for this edition)`);
+          totalSkipped++;
+          stats.skipped.push({ chapter: 0, heading: 'additional', filename });
         } else {
           console.log(`  ✗ ${filename} - ${result.error || 'Unknown error'}`);
           totalFailed++;
@@ -1014,16 +961,11 @@ async function main(): Promise<void> {
             chapterDownloaded++;
             stats.downloaded.push({ chapter, heading, filename });
           } else if (result.status === 404) {
-            // 404 is a bug - file should exist, stop and fix
-            console.error(`\n❌ ERROR: File not found (404): ${filename}`);
-            console.error(`   URL: ${url}`);
-            console.error(`   Chapter: ${chapter}, Heading: ${heading}`);
-            console.error(`\nThis is a bug - the file should exist. Please check:`);
-            console.error(`   1. Is the filename pattern correct?`);
-            console.error(`   2. Is the URL pattern correct?`);
-            console.error(`   3. Does the file exist on the WCO server?`);
-            console.error(`\nStopping download to fix the bug.\n`);
-            process.exit(1);
+            // 404 is expected for headings that don't exist (not all chapters have all headings 01-99)
+            // Skip silently to avoid cluttering output
+            totalSkipped++;
+            chapterSkipped++;
+            // Don't add to stats.failed - 404s are expected for non-existent headings
           } else {
             console.log(`  ✗ ${filename} - ${result.error || 'Unknown error'}`);
             totalFailed++;

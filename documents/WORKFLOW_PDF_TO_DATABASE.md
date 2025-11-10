@@ -10,13 +10,18 @@ PDF Download → Markdown Conversion → LLM Extraction → Database Import
 
 ## Step 1: Download WCO PDFs ✅ COMPLETED
 
-**Status:** ✅ All 111 PDFs downloaded for 2022 edition
+**Status:** ✅ All PDFs downloaded for 4 editions:
+- **2007 edition**: 108 PDFs
+- **2012 edition**: 109 PDFs
+- **2017 edition**: 111 PDFs
+- **2022 edition**: 111 PDFs
+- **Total**: 439 PDFs
 
 **Scripts:**
-- Browser-based (recommended): `yarn download-wco-pdfs:browser --headless`
-- HTTP-based: `yarn download-wco-pdfs`
+- Browser-based (recommended): `yarn download-wco-pdfs:browser --edition <year> --headless`
+- HTTP-based: `yarn download-wco-pdfs --edition <year>`
 
-**Output:** `./data/wco/2022/pdfs/*.pdf`
+**Output:** `./data/wco/{edition}/pdfs/*.pdf`
 
 **Documentation:**
 - `scripts/README.md` - Full script documentation
@@ -25,9 +30,14 @@ PDF Download → Markdown Conversion → LLM Extraction → Database Import
 
 ## Step 2: Convert PDFs to Markdown ✅ COMPLETED
 
-**Status:** ✅ All 111 PDFs converted to Markdown
+**Status:** ✅ All PDFs converted to Markdown for 4 editions:
+- **2007 edition**: 108 Markdown files
+- **2012 edition**: 109 Markdown files
+- **2017 edition**: 111 Markdown files
+- **2022 edition**: 111 Markdown files
+- **Total**: 439 Markdown files
 
-**Script:** `yarn pdf-to-markdown --tool pdfjs` (or `marker`/`pdfplumber`)
+**Script:** `yarn pdf-to-markdown --edition <year> --tool pdfjs` (or `marker`/`pdfplumber`)
 
 **Quick Start:**
 ```bash
@@ -36,11 +46,11 @@ pip install marker-pdf  # Recommended for best quality
 # OR: pip install pdfplumber
 # OR: yarn add pdfjs-dist
 
-# Convert all PDFs
-yarn pdf-to-markdown --tool marker
+# Convert all PDFs for an edition
+yarn pdf-to-markdown --edition 2022 --tool marker
 ```
 
-**Output:** `./data/wco/2022/md/*.md` (111 files)
+**Output:** `./data/wco/{edition}/md/*.md`
 
 **Documentation:**
 - `scripts/README.md` - Complete documentation with tool comparison
@@ -156,9 +166,9 @@ yarn pdf-to-markdown --tool marker
 
 | Step | Status | Script/Tool | Output Location |
 |------|--------|-------------|-----------------|
-| 1. PDF Download | ✅ Complete | `download-wco-pdfs-browser.ts` | `./data/wco/2022/pdfs/*.pdf` (111 files) |
-| 2. Markdown Conversion | ✅ Complete | `pdf-to-markdown.ts` | `./data/wco/2022/md/*.md` (111 files) |
-| 3. LLM Extraction | ⏳ TODO | TBD | Structured JSON/Data |
+| 1. PDF Download | ✅ Complete | `download-wco-pdfs-browser.ts` | `./data/wco/{edition}/pdfs/*.pdf` (439 files across 4 editions) |
+| 2. Markdown Conversion | ✅ Complete | `pdf-to-markdown.ts` | `./data/wco/{edition}/md/*.md` (439 files across 4 editions) |
+| 3. LLM Extraction | ⏳ TODO | `llm-extract-data.ts` (skeleton exists) | Structured JSON/Data |
 | 4. Database Import | ⏳ TODO | TBD | PostgreSQL database |
 
 ## Next Actions
