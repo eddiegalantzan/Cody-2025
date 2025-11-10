@@ -1,0 +1,210 @@
+#!/usr/bin/env tsx
+/// <reference types="node" />
+
+/**
+ * LLM-Based Data Extraction Script (Skeleton)
+ * 
+ * Extracts structured data from Markdown files using LLM.
+ * This is a skeleton/template for the actual implementation.
+ * 
+ * TODO: Implement this script to:
+ * 1. Read Markdown files from ./data/wco-pdfs/{edition}/markdown/
+ * 2. Use LLM to extract structured data:
+ *    - HS codes (4-digit headings, 6-digit subheadings)
+ *    - Descriptions
+ *    - Classification rules
+ *    - Hierarchical structure
+ *    - Country-specific data
+ * 3. Transform to database schema format
+ * 4. Validate extracted data
+ * 5. Output JSON or directly import to database
+ * 
+ * Usage:
+ *   tsx scripts/llm-extract-data.ts [options]
+ * 
+ * Options:
+ *   --edition <year>        WCO edition year (default: 2022)
+ *   --input <dir>           Input directory with Markdown files (default: ./data/wco-pdfs/{edition}/markdown)
+ *   --output <file|dir>     Output file (JSON) or directory (default: ./data/wco-pdfs/{edition}/extracted)
+ *   --provider <provider>  LLM provider: openai, anthropic, google, xai (default: openai)
+ *   --model <model>        LLM model name (default: provider-specific)
+ *   --batch-size <n>        Number of files to process per batch (default: 10)
+ *   --skip-existing         Skip files that already have extracted data
+ *   --dry-run               Show what would be extracted without calling LLM
+ *   --help, -h              Show help message
+ */
+
+// TODO: Import required modules
+// import { promises as fs } from 'fs';
+// import * as path from 'path';
+// import { existsSync } from 'fs';
+// import { LLMProvider } from './llm-providers'; // TODO: Create LLM provider abstraction
+
+// TODO: Configuration
+// const DEFAULT_EDITION = '2022';
+// const DEFAULT_INPUT_DIR = './data/wco-pdfs';
+// const DEFAULT_OUTPUT_DIR = './data/wco-pdfs';
+// const DEFAULT_PROVIDER = 'openai';
+// const DEFAULT_BATCH_SIZE = 10;
+
+// TODO: Interface definitions
+// interface Config {
+//   edition: string;
+//   inputDir: string;
+//   outputDir: string;
+//   provider: 'openai' | 'anthropic' | 'google' | 'xai';
+//   model: string;
+//   batchSize: number;
+//   skipExisting: boolean;
+//   dryRun: boolean;
+// }
+
+// TODO: Data structures for extracted data
+// interface ExtractedHSCode {
+//   code: string; // 4-digit or 6-digit
+//   description: string;
+//   parentCode?: string; // For hierarchical structure
+//   level: 'heading' | 'subheading';
+//   rules?: string[];
+//   notes?: string;
+// }
+
+// interface ExtractedData {
+//   filename: string;
+//   edition: string;
+//   section?: string;
+//   chapter?: string;
+//   headings: ExtractedHSCode[];
+//   subheadings: ExtractedHSCode[];
+//   rules: string[];
+//   metadata: {
+//     extractedAt: string;
+//     provider: string;
+//     model: string;
+//     tokensUsed?: number;
+//     cost?: number;
+//   };
+// }
+
+// TODO: Parse command line arguments
+// function parseArgs(): Config { ... }
+
+// TODO: Load LLM provider
+// async function loadLLMProvider(config: Config): Promise<LLMProvider> { ... }
+
+// TODO: Create extraction prompt
+// function createExtractionPrompt(markdownContent: string): string {
+//   return `
+// Extract structured data from the following WCO HS Nomenclature document.
+// 
+// Extract:
+// 1. HS Codes (4-digit headings and 6-digit subheadings)
+// 2. Descriptions for each code
+// 3. Classification rules
+// 4. Hierarchical structure (section → chapter → heading → subheading)
+// 5. Notes and explanatory text
+// 
+// Return JSON in the following format:
+// {
+//   "section": "...",
+//   "chapter": "...",
+//   "headings": [
+//     {
+//       "code": "0101",
+//       "description": "...",
+//       "rules": [...],
+//       "notes": "..."
+//     }
+//   ],
+//   "subheadings": [
+//     {
+//       "code": "010111",
+//       "description": "...",
+//       "parentCode": "0101",
+//       "rules": [...],
+//       "notes": "..."
+//     }
+//   ]
+// }
+// 
+// Document:
+// ${markdownContent}
+//   `;
+// }
+
+// TODO: Extract data using LLM
+// async function extractDataWithLLM(
+//   provider: LLMProvider,
+//   markdownContent: string,
+//   config: Config
+// ): Promise<ExtractedData> {
+//   const prompt = createExtractionPrompt(markdownContent);
+//   const response = await provider.generate(prompt, {
+//     model: config.model,
+//     temperature: 0.1, // Low temperature for consistent extraction
+//     maxTokens: 4000
+//   });
+//   
+//   // Parse JSON response
+//   // Validate structure
+//   // Return ExtractedData
+// }
+
+// TODO: Validate extracted data
+// function validateExtractedData(data: ExtractedData): { valid: boolean; errors: string[] } {
+//   const errors: string[] = [];
+//   
+//   // Validate HS code formats
+//   // Validate hierarchical relationships
+//   // Validate required fields
+//   
+//   return { valid: errors.length === 0, errors };
+// }
+
+// TODO: Transform to database schema
+// function transformToDatabaseSchema(data: ExtractedData): {
+//   wcoSections: any[];
+//   wcoChapters: any[];
+//   wcoHeadings: any[];
+//   wcoHSCodes: any[];
+// } {
+//   // Transform ExtractedData to database schema format
+//   // Handle hierarchical relationships
+//   // Prepare for batch insert
+// }
+
+// TODO: Main function
+// async function main(): Promise<void> {
+//   const config = parseArgs();
+//   
+//   // Find all Markdown files
+//   // Process in batches
+//   // Extract data using LLM
+//   // Validate extracted data
+//   // Save to JSON or import to database
+//   // Track progress and errors
+// }
+
+// TODO: Run main function
+// main().catch((error) => {
+//   console.error('Fatal error:', error);
+//   process.exit(1);
+// });
+
+console.log(`
+LLM-Based Data Extraction Script (Skeleton)
+
+This is a skeleton/template for the LLM extraction script.
+See TODO comments in the code for implementation details.
+
+Next steps:
+1. Create LLM provider abstraction layer
+2. Implement extraction prompts
+3. Implement data validation
+4. Implement database transformation
+5. Add batch processing and error handling
+6. Add cost tracking
+
+See documents/5.0_PLAN.md Phase 3.1 for detailed requirements.
+`);
+

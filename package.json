@@ -1,0 +1,35 @@
+{
+  "name": "cody-2025",
+  "version": "1.0.0",
+  "description": "HS Code Classifier Application with 99.99% accuracy",
+  "private": true,
+  "scripts": {
+    "download-wco-pdfs": "tsx scripts/download-wco-pdfs.ts",
+    "download-wco-pdfs:help": "tsx scripts/download-wco-pdfs.ts --help",
+    "download-wco-pdfs:browser": "tsx scripts/download-wco-pdfs-browser.ts",
+    "download-wco-pdfs:browser:help": "tsx scripts/download-wco-pdfs-browser.ts --help",
+    "pdf-to-markdown": "tsx scripts/pdf-to-markdown.ts",
+    "pdf-to-markdown:help": "tsx scripts/pdf-to-markdown.ts --help"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/puppeteer": "^7.0.4",
+    "puppeteer": "^24.29.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "hs-code",
+    "classifier",
+    "customs",
+    "tariff"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "pdfjs-dist": "4.0.379"
+  }
+}

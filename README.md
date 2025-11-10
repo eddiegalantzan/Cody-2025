@@ -11,6 +11,9 @@ HS Code Classifier with 99.99% accuracy:
 - Classify product descriptions to HS codes based on **known customs books** (country-specific)
 - **Israel:** 3 customs books (verify and implement all 3)
 - **Other countries:** Different customs books and rules
+- **Customs Book Rules Database:** Store classification rules in database for LLM context
+- **LLM-Based Data Extraction:** Use LLM to extract structured data (HS codes, rules) from customs book PDFs and text
+- **Automated Data Synchronization (Mehavizim):** Automated systems to populate and keep customs book data up-to-date
 - Interactive questions when HS code unknown
 - Reject abstract descriptions (e.g., "gift")
 - Company item code list upload and lookup
@@ -35,9 +38,45 @@ All methods follow the same pattern:
 - **API Synchronous:** POST request, wait for immediate response with HS code(s) or questions. Continue workflow with session ID + answers
 
 ## Quick Start
+
+### Prerequisites
+- Node.js 20+ ([Download](https://nodejs.org/))
+- Yarn ([Install Yarn](https://yarnpkg.com/getting-started/install))
+- PostgreSQL 16+ (for database)
+- Terraform ≥ 1.7 (for infrastructure)
+
+### Installation
+
+```bash
+# Clone the repository (if applicable)
+# cd CiCd
+
+# Install dependencies
+yarn install
+```
+
+### Getting Started
 1. Read [2.0_PROJECT_RULES.md](./documents/2.0_PROJECT_RULES.md)
 2. Review [5.0_PLAN.md](./documents/5.0_PLAN.md)
 3. Start [6.0_STEP_1_TERRAFORM_POSTGRES.md](./documents/6.0_STEP_1_TERRAFORM_POSTGRES.md)
+
+### Scripts
+
+```bash
+# Download WCO PDFs (browser-based, recommended)
+yarn download-wco-pdfs:browser --headless
+
+# Download WCO PDFs (HTTP-based)
+yarn download-wco-pdfs
+
+# Convert PDFs to Markdown (for LLM processing)
+yarn pdf-to-markdown --tool marker
+
+# See help
+yarn download-wco-pdfs:browser:help
+yarn download-wco-pdfs:help
+yarn pdf-to-markdown:help
+```
 
 ## Documentation
 
@@ -50,7 +89,9 @@ All methods follow the same pattern:
 7. [6.1_DIGITALOCEAN_SETUP.md](./documents/6.1_DIGITALOCEAN_SETUP.md) - DigitalOcean account setup
 8. [7.0_SECRETS_MANAGEMENT.md](./documents/7.0_SECRETS_MANAGEMENT.md) - Secrets configuration
 9. [8.0_SECURITY.md](./documents/8.0_SECURITY.md) - Security practices
-10. [9.0_INTEGRATIONS.md](./documents/9.0_INTEGRATIONS.md) - Third-party integrations (Clerk, Payoneer, Mailgun, WhatsApp)
+10. [9.0_INTEGRATIONS.md](./documents/9.0_INTEGRATIONS.md) - Third-party integrations (Clerk, Payoneer, Mailgun, WhatsApp, LLM Providers)
+11. [10.0_HS_CODE_STRUCTURE.md](./documents/10.0_HS_CODE_STRUCTURE.md) - HS code structure and country-specific implementations
+12. [11.0_CUSTOMS_DATA_DOWNLOAD.md](./documents/11.0_CUSTOMS_DATA_DOWNLOAD.md) - Guide for downloading customs data from official sources and automated synchronization mechanisms
 
 ## Resources
 
@@ -64,6 +105,11 @@ All methods follow the same pattern:
 - **Payoneer**: https://www.payoneer.com/partners/integrated-payments-api/ - Payment processing API
 - **Mailgun**: https://documentation.mailgun.com/ - Email delivery and receiving
 - **WhatsApp Business API**: https://developers.facebook.com/docs/whatsapp - Official Meta WhatsApp messaging
+- **LLM Providers**: 
+  - **OpenAI**: https://platform.openai.com/docs - GPT-4, GPT-3.5 for HS code classification
+  - **Anthropic**: https://docs.anthropic.com - Claude 3 for HS code classification
+  - **Google Gemini**: https://ai.google.dev/docs - Gemini Pro/Ultra for HS code classification
+  - **xAI (Grok)**: https://docs.x.ai - Grok-1, Grok-2 for HS code classification
 
 ### Development
 - TypeScript: https://www.typescriptlang.org/docs/

@@ -2,6 +2,10 @@
 
 Safe migration process for Cody-2025 database schema changes.
 
+## ⚠️ Important Note
+
+**Migrations are NOT needed until production is running.** During planning and development, all schema changes go directly into `init.sql`. This guide is for future use when the system is deployed to production.
+
 ## Overview
 
 **Migration Strategy:** Database backup-based rollback

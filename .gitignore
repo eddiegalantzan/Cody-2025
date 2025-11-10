@@ -3,19 +3,27 @@ node_modules/
 .pnp
 .pnp.js
 
-# Testing
-coverage/
-*.log
-
-# Production
-build/
-dist/
-*.tsbuildinfo
-
 # Environment variables
 .env
 .env.local
 .env.*.local
+.secrets
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # IDE
 .vscode/
@@ -24,21 +32,17 @@ dist/
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
+# Data files (downloaded PDFs)
+data/
+*.pdf
 
 # Terraform
+.terraform/
 *.tfstate
 *.tfstate.*
-.terraform/
 .terraform.lock.hcl
-terraform.tfvars
+tfplan
 
-# Secrets
-*.pem
-*.key
-secrets/
-.secrets
-.secrets.*
-
+# Temporary files
+tmp/
+temp/
